@@ -13,6 +13,23 @@ namespace CG_Biblioteca
     {
     }
 
+    public bool VerificarSeDentroBBox(Ponto4D ponto) {
+      if (ponto.X < menorX) 
+        return false;
+      if (ponto.X > maiorX)
+        return false;
+      if (ponto.Y < menorY) 
+        return false;
+      if (ponto.Y > maiorY)
+        return false;
+      if (ponto.Z < menorZ) 
+        return false;
+      if (ponto.Z > maiorZ)
+        return false;
+
+      return true;
+    }
+
     public void Atualizar(List<Ponto4D> pontosLista)
     {
       this.menorX = pontosLista[0].X; this.menorY = pontosLista[0].Y; this.menorZ = pontosLista[0].Z;

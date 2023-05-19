@@ -9,6 +9,7 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Windowing.Desktop;
 using System;
+using System.Collections.Generic;
 using OpenTK.Mathematics;
 
 //FIXME: padrão Singleton
@@ -85,15 +86,15 @@ namespace gcgcg
       _shaderAzul = new Shader("Shaders/shader.vert", "Shaders/shaderAzul.frag");
       #endregion
 
-      // #region Objeto: polígono qualquer  
-      // List<Ponto4D> pontosPoligono = new List<Ponto4D>();
-      // pontosPoligono.Add(new Ponto4D(0.25, 0.25));
-      // pontosPoligono.Add(new Ponto4D(0.75, 0.25));
-      // pontosPoligono.Add(new Ponto4D(0.75, 0.75));
-      // pontosPoligono.Add(new Ponto4D(0.50, 0.50));
-      // pontosPoligono.Add(new Ponto4D(0.25, 0.75));
-      // objetoSelecionado = new Poligono(mundo, ref rotuloAtual, pontosPoligono);
-      // #endregion
+      #region Objeto: polígono qualquer  
+      List<Ponto4D> pontosPoligono = new List<Ponto4D>();
+      pontosPoligono.Add(new Ponto4D(0.25, 0.25));
+      pontosPoligono.Add(new Ponto4D(0.75, 0.25));
+      pontosPoligono.Add(new Ponto4D(0.75, 0.75));
+      pontosPoligono.Add(new Ponto4D(0.50, 0.50));
+      pontosPoligono.Add(new Ponto4D(0.25, 0.75));
+      objetoSelecionado = new Poligono(mundo, ref rotuloAtual, pontosPoligono);
+      #endregion
       // #region NÃO USAR: declara um objeto filho ao polígono
       // objetoSelecionado = new Ponto(objetoSelecionado, ref rotuloAtual, new Ponto4D(0.50, 0.75));
       // objetoSelecionado.ToString();
@@ -104,15 +105,29 @@ namespace gcgcg
       // objetoSelecionado.PrimitivaTipo = PrimitiveType.LineLoop;
       // #endregion
 
-      #region Objeto: segmento de reta  
-      objetoSelecionado = new SegReta(mundo, ref rotuloAtual, new Ponto4D(-0.5, -0.5), new Ponto4D());
+      // #region Objeto: segmento de reta  
+      // objetoSelecionado = new SegReta(mundo, ref rotuloAtual, new Ponto4D(-0.5, -0.5), new Ponto4D());
+      // #endregion
+
+      #region Objeto: ponto  
+      Ponto ponto = new Ponto(mundo, ref rotuloAtual, new Ponto4D(-0.25, -0.25));
+      ponto.PrimitivaTipo = PrimitiveType.Points;
+      ponto.PrimitivaTamanho = 5; // FIXME: não está mudando o tamanho
+      Console.WriteLine(objetoSelecionado.Bbox().VerificarSeDentroBBox(new Ponto4D(-0.25, -0.25)));
+
+      ponto = new Ponto(mundo, ref rotuloAtual, new Ponto4D(0.5, 0.7));
+      ponto.PrimitivaTipo = PrimitiveType.Points;
+      ponto.PrimitivaTamanho = 5; // FIXME: não está mudando o tamanho
+      Console.WriteLine(objetoSelecionado.Bbox().VerificarSeDentroBBox(new Ponto4D(0.5, 0.7)));
+      
+      ponto = new Ponto(mundo, ref rotuloAtual, new Ponto4D(0.5, 0.4));
+      ponto.PrimitivaTipo = PrimitiveType.Points;
+      ponto.PrimitivaTamanho = 5; // FIXME: não está mudando o tamanho
+      Console.WriteLine(objetoSelecionado.Bbox().VerificarSeDentroBBox(new Ponto4D(0.5, 0.4)));
       #endregion
 
-      // #region Objeto: ponto  
-      // objetoSelecionado = new Ponto(mundo, ref rotuloAtual, new Ponto4D(-0.25, -0.25));
-      // objetoSelecionado.PrimitivaTipo = PrimitiveType.Points;
-      // objetoSelecionado.PrimitivaTamanho = 5; // FIXME: não está mudando o tamanho
-      // #endregion
+      
+      
 
 #if CG_Privado
       // #region Objeto: circulo  
