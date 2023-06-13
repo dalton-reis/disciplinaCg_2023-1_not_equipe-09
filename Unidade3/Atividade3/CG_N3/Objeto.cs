@@ -168,6 +168,27 @@ namespace gcgcg
             ObjetoAtualizar();
         }
 
+        // #4
+        public int PontosMaisPertoXY(Ponto4D pto)
+        {
+            int pontoMaisPerto = 0;
+            float distancia = 999999999;
+
+            for (int i = 0; i < pontosLista.Count; i++)
+            {
+                Ponto4D ponto = pontosLista[i];
+                float calculo = ((float)Math.Sqrt(Math.Pow(ponto.X - pto.X, 2) + Math.Pow(ponto.Y - pto.Y, 2)));
+
+                if (calculo < distancia)
+                {
+                    pontoMaisPerto = i;
+                    distancia = calculo;
+                }
+            }
+
+            return pontoMaisPerto;
+        }
+
         public void PontosAlterar(Ponto4D pto, int posicao)
         {
             pontosLista[posicao] = pto;

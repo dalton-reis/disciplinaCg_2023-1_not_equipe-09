@@ -43,6 +43,11 @@ namespace gcgcg
         // #2
         private List<Ponto4D> vertices = new List<Ponto4D>();
         private bool isDrawingPolygon = false;
+
+        // #4
+        private Poligono poligonoSelecionado;
+        private float distanciaMinima;
+        private int verticeSelecionadoIndex;
         public Mundo(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
                : base(gameWindowSettings, nativeWindowSettings)
         {
@@ -202,7 +207,8 @@ namespace gcgcg
             }
             if (input.IsKeyDown(Keys.Escape))
                 Close();
-            if (input.IsKeyPressed(Keys.Space) && objetoSelecionado != null){
+            if (input.IsKeyPressed(Keys.Space) && objetoSelecionado != null)
+            {
                 objetoSelecionado.shaderCor = _shaderBranca;
                 objetoSelecionado = mundo.GrafocenaBuscaProximo(objetoSelecionado);
                 if (objetoSelecionado != null)
@@ -267,6 +273,7 @@ namespace gcgcg
                 System.Console.WriteLine("Vector2 mousePosition: " + MousePosition);
                 System.Console.WriteLine("Vector2i windowSize: " + Size);
             }
+            // #4
             if (MouseState.IsButtonDown(MouseButton.Right) && objetoSelecionado != null)
             {
                 System.Console.WriteLine("MouseState.IsButtonDown(MouseButton.Right)");
@@ -276,7 +283,7 @@ namespace gcgcg
                 Ponto4D mousePonto = new Ponto4D(MousePosition.X, MousePosition.Y);
                 Ponto4D sruPonto = Utilitario.NDC_TelaSRU(janelaLargura, janelaAltura, mousePonto);
 
-                objetoSelecionado.PontosAlterar(sruPonto, 0);
+                objetoSelecionado.PontosAlterar(sruPonto, objetoSelecionado.PontosMaisPertoXY(sruPonto));
             }
             if (MouseState.IsButtonReleased(MouseButton.Right))
             {
