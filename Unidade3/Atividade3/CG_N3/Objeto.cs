@@ -168,6 +168,12 @@ namespace gcgcg
             ObjetoAtualizar();
         }
 
+        public void PontosRemover(Ponto4D pto)
+        {
+            pontosLista.Remove(pto);
+            ObjetoAtualizar();
+        }
+
         // #4
         public int PontosMaisPertoXY(Ponto4D pto)
         {

@@ -198,6 +198,18 @@ namespace gcgcg
             // #3
             if (input.IsKeyPressed(Keys.D))
             {
+                System.Console.WriteLine("MouseState.IsButtonDown(MouseButton.Right)");
+
+                int janelaLargura = Size.X;
+                int janelaAltura = Size.Y;
+                Ponto4D mousePonto = new Ponto4D(MousePosition.X, MousePosition.Y);
+                Ponto4D sruPonto = Utilitario.NDC_TelaSRU(janelaLargura, janelaAltura, mousePonto);
+
+                objetoSelecionado.PontosRemover(objetoSelecionado.PontosId(objetoSelecionado.PontosMaisPertoXY(sruPonto)));
+            }
+            // #5
+            if (input.IsKeyPressed(Keys.E))
+            {
                 Objeto proximoObjeto = mundo.GrafocenaBuscaProximo(objetoSelecionado);
 
                 mundo.RemoverObjeto(objetoSelecionado);
