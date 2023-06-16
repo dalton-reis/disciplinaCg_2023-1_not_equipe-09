@@ -217,6 +217,21 @@ namespace gcgcg
                 objetoSelecionado = proximoObjeto;
                 objetoSelecionado.shaderCor = _shaderAmarela;
             }
+            // #9
+            if (input.IsKeyPressed(Keys.S))
+            {
+                System.Console.WriteLine("MouseState.IsButtonDown(MouseButton.Right)");
+
+                int janelaLargura = Size.X;
+                int janelaAltura = Size.Y;
+                Ponto4D mousePonto = new Ponto4D(MousePosition.X, MousePosition.Y);
+                Ponto4D sruPonto = Utilitario.NDC_TelaSRU(janelaLargura, janelaAltura, mousePonto);
+
+                objetoSelecionado = mundo.BuscarObjetoPontoDentro(sruPonto);
+
+                if(objetoSelecionado != null)
+                    objetoSelecionado.ToString();
+            }
             if (input.IsKeyDown(Keys.Escape))
                 Close();
             if (input.IsKeyPressed(Keys.Space) && objetoSelecionado != null)
@@ -378,3 +393,101 @@ namespace gcgcg
 #endif
     }
 }
+
+/*
+                              +-------------------+
+                              |       Mundo       |
+                              +-------------------+
+                              | - mundo: Objeto   |
+                              | - rotuloNovo: char|
+                              | - objetoSelecionado: Objeto|
+                              | - _sruEixos: float[]|
+                              | - _vertexBufferObject_sruEixos: int|
+                              | - _vertexArrayObject_sruEixos: int|
+                              | - _shaderBranca: Shader|
+                              | - _shaderVermelha: Shader|
+                              | - _shaderVerde: Shader|
+                              | - _shaderAzul: Shader|
+                              | - _shaderCiano: Shader|
+                              | - _shaderMagenta: Shader|
+                              | - _shaderAmarela: Shader|
+                              | - vertices: List<Ponto4D>|
+                              | - isDrawingPolygon: bool|
+                              | - poligonoSelecionado: Poligono|
+                              | - distanciaMinima: float|
+                              | - verticeSelecionadoIndex: int|
+                              +-------------------+
+                              | + OnLoad()        |
+                              | + OnRenderFrame() |
+                              | + OnUpdateFrame() |
+                              +-------------------+
+
+                    +-------------------+
+                    |      Objeto       |
+                    +-------------------+
+                    | - pai: Objeto     |
+                    | - rotulo: char    |
+                    | - filho: Objeto   |
+                    | - irmao: Objeto   |
+                    | - primitivaTipo: PrimitiveType|
+                    | - primitivaTamanho: int|
+                    | - pontos: List<Ponto4D>|
+                    | - shaderCor: Shader|
+                    | - matriz: Transformacao4D|
+                    +-------------------+
+                    | + Desenhar(Transformacao4D)|
+                    | + Remover()       |
+                    | + GrafocenaBuscaProximo(Objeto): Objeto|
+                    | + BuscarObjetoPontoDentro(Ponto4D): Objeto|
+                    | + GrafocenaImprimir(string)|
+                    | + MatrizImprimir()|
+                    | + MatrizAtribuirIdentidade()|
+                    | + MatrizTranslacaoXYZ(double, double, double)|
+                    | + MatrizEscalaXYZ(double, double, double)|
+                    | + MatrizEscalaXYZBBox(double, double, double)|
+                    | + MatrizRotacao(double)|
+                    +-------------------+
+
+   +--------------+
+   |  Poligono    |
+   +--------------+
+   | - area: double|
+   +--------------+
+   | + CalcularArea()|
+   +--------------+
+
+    +--------------+
+    |   Retangulo  |
+    +--------------+
+    | - largura: double|
+    | - altura: double |
+    +--------------+
+    | + CalcularArea()|
+    +--------------+
+
+     +--------------+
+     |   SegReta    |
+     +--------------+
+     | - pontoA: Ponto4D|
+     | - pontoB: Ponto4D |
+     +--------------+
+
+      +--------------+
+      |   Ponto      |
+      +--------------+
+      | - ponto: Ponto4D|
+      +--------------+
+
+       +--------------+
+       |   Circulo    |
+       +--------------+
+       | - raio: double|
+       | - centro: Ponto4D |
+       +--------------+
+
+        +--------------+
+        |   Spline     |
+        +--------------+
+        | - pontosControle: List<Ponto4D>|
+        +--------------+
+*/

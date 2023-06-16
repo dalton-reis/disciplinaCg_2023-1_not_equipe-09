@@ -195,6 +195,58 @@ namespace gcgcg
             return pontoMaisPerto;
         }
 
+        // #9
+        public bool PontoDentroBBox(Ponto4D ponto)
+        {
+            // Verificar se o ponto está dentro da bounding box do objeto
+            if (ponto.X >= bBox.obterMenorX && ponto.X <= bBox.obterMaiorX &&
+                ponto.Y >= bBox.obterMenorY && ponto.Y <= bBox.obterMaiorY &&
+                ponto.Z >= bBox.obterMenorZ && ponto.Z <= bBox.obterMaiorZ)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        public bool PontoDentroObjeto(Ponto4D ponto)
+        {
+            int intersectCount = 0;
+            Ponto4D pontoInicial = pontosLista[pontosLista.Count - 1];
+
+            for (int i = 0; i < pontosLista.Count; i++)
+            {
+                Ponto4D pontoFinal = pontosLista[i];
+
+                if (((pontoInicial.Y <= ponto.Y) && (ponto.Y < pontoFinal.Y)) ||
+                    ((pontoFinal.Y <= ponto.Y) && (ponto.Y < pontoInicial.Y)))
+                {
+                    if (ponto.X < (pontoFinal.X - pontoInicial.X) * (ponto.Y - pontoInicial.Y) / (pontoFinal.Y - pontoInicial.Y) + pontoInicial.X)
+                    {
+                        intersectCount++;
+                    }
+                }
+
+                pontoInicial = pontoFinal;
+            }
+
+            return intersectCount % 2 == 1;
+        }
+
+
+        public Objeto BuscarObjetoPontoDentro(Ponto4D ponto)
+        {
+            for (var i = 0; i < objetosLista.Count; i++)
+            {
+                if (objetosLista[i].PontoDentroBBox(ponto))
+                {
+                    if (objetosLista[i].PontoDentroObjeto(ponto))
+                    {
+                        return objetosLista[i];
+                    }
+                }
+            }
+            return null;
+        }
         public void PontosAlterar(Ponto4D pto, int posicao)
         {
             pontosLista[posicao] = pto;
@@ -374,3 +426,51 @@ namespace gcgcg
 
     }
 }
+
+/*
++--------------------------------------+
+|                Objeto                |
++--------------------------------------+
+| - rotulo: char                        |
+| + Rotulo: char { get; set; }          |
+| - paiRef: Objeto                      |
+| - objetosLista: List<Objeto>          |
+| + PrimitivaTipo: PrimitiveType { get; set; }|
+| + PrimitivaTamanho: float { get; set; }|
+| + shaderCor: Shader                   |
+| - pontosLista: List<Ponto4D>          |
+| - _vertexBufferObject: int            |
+| - _vertexArrayObject: int             |
+| - bBox: BBox                          |
+| - matriz: Transformacao4D             |
+| + TrocaEixoRotacao(eixo: char)        |
+| + Objeto(paiRef: Objeto, _rotulo: ref char, objetoFilho: Objeto)|
+| - ObjetoNovo(objetoFilho: Objeto)     |
+| + ObjetoAtualizar()                   |
+| + Desenhar(matrizGrafo: Transformacao4D)|
+| + FilhoAdicionar(filho: Objeto)       |
+| + RemoverObjeto(objeto: Objeto)       |
+| + PontosId(id: int): Ponto4D          |
+| + PontosAdicionar(pto: Ponto4D)       |
+| + PontosRemover(pto: Ponto4D)         |
+| + PontosMaisPertoXY(pto: Ponto4D): int|
+| + PontoDentroBBox(ponto: Ponto4D): bool|
+| + PontoDentroObjeto(ponto: Ponto4D): bool|
+| + BuscarObjetoPontoDentro(ponto: Ponto4D): Objeto|
+| + PontosAlterar(pto: Ponto4D, posicao: int)|
+| + GrafocenaBusca(_rotulo: char): Objeto|
+| + GrafocenaBuscaProximo(objetoAtual: Objeto): Objeto|
+| + GrafocenaImprimir(idt: String)      |
+| + MatrizImprimir()                    |
+| + MatrizAtribuirIdentidade()          |
+| + MatrizTranslacaoXYZ(tx: double, ty: double, tz: double)|
+| + MatrizEscalaXYZ(Sx: double, Sy: double, Sz: double)|
+| + MatrizEscalaXYZBBox(Sx: double, Sy: double, Sz: double)|
+| + MatrizRotacaoEixo(angulo: double)  |
+| + MatrizRotacao(angulo: double)       |
+| + MatrizRotacaoZBBox(angulo: double)  |
+| + OnUnload()                          |
++--------------------------------------+
+
+
+*/
