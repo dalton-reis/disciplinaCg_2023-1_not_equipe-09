@@ -228,8 +228,27 @@ namespace gcgcg
             }
             if (input.IsKeyPressed(Keys.G))
                 mundo.GrafocenaImprimir("");
+            // #8
+            if (input.IsKeyPressed(Keys.R))
+                if (objetoSelecionado != null)
+                    objetoSelecionado.shaderCor = _shaderVermelha;
+            if (input.IsKeyPressed(Keys.G))
+                if (objetoSelecionado != null)
+                    objetoSelecionado.shaderCor = _shaderVerde;
+            if (input.IsKeyPressed(Keys.B))
+                if (objetoSelecionado != null)
+                    objetoSelecionado.shaderCor = _shaderAzul;
+            // #7
             if (input.IsKeyPressed(Keys.P) && objetoSelecionado != null)
+            {
                 System.Console.WriteLine(objetoSelecionado.ToString());
+
+                if (objetoSelecionado != null)
+                    if (objetoSelecionado.PrimitivaTipo == PrimitiveType.LineLoop)
+                        objetoSelecionado.PrimitivaTipo = PrimitiveType.LineStrip;
+                    else
+                        objetoSelecionado.PrimitivaTipo = PrimitiveType.LineLoop;
+            }
             if (input.IsKeyPressed(Keys.M) && objetoSelecionado != null)
                 objetoSelecionado.MatrizImprimir();
             //TODO: não está atualizando a BBox com as transformações geométricas
