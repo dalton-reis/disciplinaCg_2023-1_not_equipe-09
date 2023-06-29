@@ -39,6 +39,7 @@ namespace gcgcg
     private Shader _shaderCiano;
     private Shader _shaderMagenta;
     private Shader _shaderAmarela;
+    private int test = 1;
 
     private Camera _camera;
 
@@ -124,20 +125,24 @@ namespace gcgcg
 
       #region Objeto: polígono quadrado
       /*List<Ponto4D> pontosPoligonoQuadrado = new List<Ponto4D>();
-      pontosPoligonoQuadrado.Add(new Ponto4D(-0.25, 0.25, 0.1));
-      pontosPoligonoQuadrado.Add(new Ponto4D(-0.75, 0.25, 0.1));
-      pontosPoligonoQuadrado.Add(new Ponto4D(-0.75, 0.75, 0.1));
-      pontosPoligonoQuadrado.Add(new Ponto4D(-0.25, 0.75, 0.1));
+      pontosPoligonoQuadrado.Add(new Ponto4D(-10, -10, 0));
+      pontosPoligonoQuadrado.Add(new Ponto4D(+10, -10, 0));
+      pontosPoligonoQuadrado.Add(new Ponto4D(+10, +10, 0));
+      pontosPoligonoQuadrado.Add(new Ponto4D(-10, +10, 0));
       objetoSelecionado = new Poligono(mundo, ref rotuloNovo, pontosPoligonoQuadrado);
       objetoSelecionado.PrimitivaTipo = PrimitiveType.TriangleFan;*/
+      //objetoSelecionado.pathTexture = "\\E:\\WorkSpace\\Programação\\Furb\\Dalton\\disciplinaCg_2023-1_not_equipe-09\\Unidade4\\Atividade4\\CG_N4\\TESTE2.jpg";
       #endregion
 
       #region Objeto: Cubo
       objetoSelecionado = new Cubo(mundo, ref rotuloNovo, new Ponto4D(-1,-1,0), new Ponto4D(1,1,0));
-      objetoSelecionado.PrimitivaTipo = PrimitiveType.LineLoop;
+      objetoSelecionado.PrimitivaTipo = PrimitiveType.Triangles;
+
+      //objetoSelecionado.pathTexture = "TESTE2.jpg";
+
       #endregion
 
-      _camera = new Camera(Vector3.UnitZ, Size.X / (float)Size.Y);
+      _camera = new Camera(new Vector3(0,0,5), Size.X / (float) Size.Y);
     }
 
     protected override void OnRenderFrame(FrameEventArgs e)
@@ -154,13 +159,20 @@ namespace gcgcg
       SwapBuffers();
     }
 
+
+    private float posX = 0f;
+    private float posY = 0f;
+    private float posZ = 0f;
+
     protected override void OnUpdateFrame(FrameEventArgs e)
     {
       base.OnUpdateFrame(e);
 
       // ☞ 396c2670-8ce0-4aff-86da-0f58cd8dcfdc   TODO: forma otimizada para teclado.
       #region Teclado
+      #region NADA
       var input = KeyboardState;
+      /*
       if (input.IsKeyDown(Keys.Escape))
         Close();
       if (input.IsKeyPressed(Keys.Space))
@@ -206,19 +218,31 @@ namespace gcgcg
       if (input.IsKeyPressed(Keys.D3) && objetoSelecionado != null)
         objetoSelecionado.MatrizRotacaoZBBox(10);
       if (input.IsKeyPressed(Keys.D4) && objetoSelecionado != null)
-        objetoSelecionado.MatrizRotacaoZBBox(-10);
+        objetoSelecionado.MatrizRotacaoZBBox(-10);*/
+      #endregion
 
       const float cameraSpeed = 1.5f;
+      const float radius = 5f;
       if (input.IsKeyDown(Keys.Z))
-        _camera.Position = Vector3.UnitZ;
-      if (input.IsKeyDown(Keys.W))
-        _camera.Position += _camera.Front * cameraSpeed * (float)e.Time; // Forward
-      if (input.IsKeyDown(Keys.S))
-        _camera.Position -= _camera.Front * cameraSpeed * (float)e.Time; // Backwards
+        _camera.Position = new Vector3();
       if (input.IsKeyDown(Keys.A))
-        _camera.Position -= _camera.Right * cameraSpeed * (float)e.Time; // Left
+      {
+        posX -= cameraSpeed * (float)e.Time;
+        posZ -= cameraSpeed * (float)e.Time;
+        float camX = (float) Math.Sin(posX) * radius;
+        float camZ = (float) Math.Cos(posZ) * radius;
+        _camera.Position = new Vector3(camX, _camera.Position.Y, camZ);
+      }
+        //_camera.Position -= _camera.Right * cameraSpeed * (float)e.Time; // Left
       if (input.IsKeyDown(Keys.D))
-        _camera.Position += _camera.Right * cameraSpeed * (float)e.Time; // Right
+      {
+        posX += cameraSpeed * (float)e.Time;
+        posZ += cameraSpeed * (float)e.Time;
+        float camX = (float) Math.Sin(posX) * radius;
+        float camZ = (float) Math.Cos(posZ) * radius;
+        _camera.Position = new Vector3(camX, _camera.Position.Y, camZ) ;
+      }
+        //_camera.Position += _camera.Right * cameraSpeed * (float)e.Time; // Right
       if (input.IsKeyDown(Keys.RightShift))
         _camera.Position += _camera.Up * cameraSpeed * (float)e.Time; // Up
       if (input.IsKeyDown(Keys.LeftShift))
@@ -228,10 +252,15 @@ namespace gcgcg
       if (input.IsKeyPressed(Keys.D6)) 
         _camera.Yaw += 5;
 
+      /*
+        front.X = (float)Math.Cos(MathHelper.DegreesToRadians(Pitch)) * (float)Math.Cos(MathHelper.DegreesToRadians(Yaw));
+        front.Y = (float)Math.Sin(MathHelper.DegreesToRadians(Pitch));
+        front.Z = (float)Math.Cos(MathHelper.DegreesToRadians(Pitch)) * (float)Math.Sin(MathHelper.DegreesToRadians(Yaw));
+      */
+
       #endregion
 
       #region  Mouse
-
       if (MouseState.IsButtonPressed(MouseButton.Left))
       {
         System.Console.WriteLine("MouseState.IsButtonPressed(MouseButton.Left)");

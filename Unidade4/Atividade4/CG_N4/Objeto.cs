@@ -15,6 +15,8 @@ namespace gcgcg
     // Objeto
     private readonly char rotulo;
     public char Rotulo { get => rotulo; }
+    private Texture objTexture;
+    public string pathTexture { set => objTexture = Texture.LoadFromFile(value); }
     protected Objeto paiRef;
     private List<Objeto> objetosLista = new List<Objeto>();
     private PrimitiveType primitivaTipo = PrimitiveType.LineLoop;
@@ -105,6 +107,9 @@ namespace gcgcg
       if (paiRef != null)
       {
         _shaderObjeto.Use();
+        //string url = "\\E:\\WorkSpace\\Programação\\Furb\\Dalton\\disciplinaCg_2023-1_not_equipe-09\\Unidade4\\Atividade4\\CG_N4\\TESTE2.jpg";
+        //objTexture = Texture.LoadFromFile(url);
+        
 
         matrizGrafo = matrizGrafo.MultiplicarMatriz(matriz);
 

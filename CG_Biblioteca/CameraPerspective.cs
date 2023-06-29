@@ -61,7 +61,8 @@ namespace CG_Biblioteca
 
         public Matrix4 GetViewMatrix()
         {
-            return Matrix4.LookAt(Position, Position + _front, _up);
+            return Matrix4.LookAt(Position, Vector3.Zero, new Vector3(0,1,0));
+            //Vector3.Zero
         }
 
         public Matrix4 GetProjectionMatrix()
