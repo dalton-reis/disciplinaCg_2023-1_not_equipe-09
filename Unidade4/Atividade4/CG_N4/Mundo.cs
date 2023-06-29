@@ -105,39 +105,11 @@ namespace gcgcg
       GL.EnableVertexAttribArray(0);
       #endregion
 
-      #region Objeto: polígono qualquer  
-      /*List<Ponto4D> pontosPoligonoBandeira = new List<Ponto4D>();
-      pontosPoligonoBandeira.Add(new Ponto4D(0.25, 0.25));
-      pontosPoligonoBandeira.Add(new Ponto4D(0.75, 0.25));
-      pontosPoligonoBandeira.Add(new Ponto4D(0.75, 0.75));
-      pontosPoligonoBandeira.Add(new Ponto4D(0.50, 0.50));
-      pontosPoligonoBandeira.Add(new Ponto4D(0.25, 0.75));
-      objetoSelecionado = new Poligono(mundo, ref rotuloNovo, pontosPoligonoBandeira);*/
-      #endregion
-      #region declara um objeto filho ao polígono qualquer
-      /*List<Ponto4D> pontosPoligonoTriangulo = new List<Ponto4D>();
-      pontosPoligonoTriangulo.Add(new Ponto4D(0.50, 0.50));
-      pontosPoligonoTriangulo.Add(new Ponto4D(0.75, 0.75));
-      pontosPoligonoTriangulo.Add(new Ponto4D(0.25, 0.75));
-      objetoSelecionado = new Poligono(objetoSelecionado, ref rotuloNovo, pontosPoligonoTriangulo);
-      objetoSelecionado.PrimitivaTipo = PrimitiveType.Triangles;*/
-      #endregion
-
-      #region Objeto: polígono quadrado
-      /*List<Ponto4D> pontosPoligonoQuadrado = new List<Ponto4D>();
-      pontosPoligonoQuadrado.Add(new Ponto4D(-10, -10, 0));
-      pontosPoligonoQuadrado.Add(new Ponto4D(+10, -10, 0));
-      pontosPoligonoQuadrado.Add(new Ponto4D(+10, +10, 0));
-      pontosPoligonoQuadrado.Add(new Ponto4D(-10, +10, 0));
-      objetoSelecionado = new Poligono(mundo, ref rotuloNovo, pontosPoligonoQuadrado);
-      objetoSelecionado.PrimitivaTipo = PrimitiveType.TriangleFan;*/
-      //objetoSelecionado.pathTexture = "\\E:\\WorkSpace\\Programação\\Furb\\Dalton\\disciplinaCg_2023-1_not_equipe-09\\Unidade4\\Atividade4\\CG_N4\\TESTE2.jpg";
-      #endregion
-
       #region Objeto: Cubo
       objetoSelecionado = new Cubo(mundo, ref rotuloNovo, new Ponto4D(-1,-1,0), new Ponto4D(1,1,0));
       objetoSelecionado.PrimitivaTipo = PrimitiveType.Triangles;
 
+      // Nosso tentativa de colocar textura
       //objetoSelecionado.pathTexture = "TESTE2.jpg";
 
       #endregion
@@ -160,6 +132,7 @@ namespace gcgcg
     }
 
 
+    // Partes usadas para deixar salvo a posição antes de aplicar o cos e sin, elas mantem um tracking do valor 'real'
     private float posX = 0f;
     private float posY = 0f;
     private float posZ = 0f;
@@ -172,7 +145,7 @@ namespace gcgcg
       #region Teclado
       #region NADA
       var input = KeyboardState;
-      /*
+      
       if (input.IsKeyDown(Keys.Escape))
         Close();
       if (input.IsKeyPressed(Keys.Space))
@@ -218,9 +191,11 @@ namespace gcgcg
       if (input.IsKeyPressed(Keys.D3) && objetoSelecionado != null)
         objetoSelecionado.MatrizRotacaoZBBox(10);
       if (input.IsKeyPressed(Keys.D4) && objetoSelecionado != null)
-        objetoSelecionado.MatrizRotacaoZBBox(-10);*/
+        objetoSelecionado.MatrizRotacaoZBBox(-10);
       #endregion
 
+
+      // Area do fonte que cuida da movimentação da câmera
       const float cameraSpeed = 1.5f;
       const float radius = 5f;
       if (input.IsKeyDown(Keys.Z))
@@ -233,7 +208,6 @@ namespace gcgcg
         float camZ = (float) Math.Cos(posZ) * radius;
         _camera.Position = new Vector3(camX, _camera.Position.Y, camZ);
       }
-        //_camera.Position -= _camera.Right * cameraSpeed * (float)e.Time; // Left
       if (input.IsKeyDown(Keys.D))
       {
         posX += cameraSpeed * (float)e.Time;
@@ -242,7 +216,6 @@ namespace gcgcg
         float camZ = (float) Math.Cos(posZ) * radius;
         _camera.Position = new Vector3(camX, _camera.Position.Y, camZ) ;
       }
-        //_camera.Position += _camera.Right * cameraSpeed * (float)e.Time; // Right
       if (input.IsKeyDown(Keys.RightShift))
         _camera.Position += _camera.Up * cameraSpeed * (float)e.Time; // Up
       if (input.IsKeyDown(Keys.LeftShift))
@@ -251,13 +224,6 @@ namespace gcgcg
         _camera.Yaw -= 5;
       if (input.IsKeyPressed(Keys.D6)) 
         _camera.Yaw += 5;
-
-      /*
-        front.X = (float)Math.Cos(MathHelper.DegreesToRadians(Pitch)) * (float)Math.Cos(MathHelper.DegreesToRadians(Yaw));
-        front.Y = (float)Math.Sin(MathHelper.DegreesToRadians(Pitch));
-        front.Z = (float)Math.Cos(MathHelper.DegreesToRadians(Pitch)) * (float)Math.Sin(MathHelper.DegreesToRadians(Yaw));
-      */
-
       #endregion
 
       #region  Mouse
