@@ -99,6 +99,12 @@ namespace gcgcg
 
         public void Desenhar(Transformacao4D matrizGrafo)
         {
+            GL.Enable(EnableCap.Texture2D);
+            GL.BindTexture(TextureTarget.Texture2D, _textureId);
+
+            GL.TexCoordPointer(2, TexCoordPointerType.Float, 0, _textureCoordinates);
+            GL.EnableClientState(ArrayCap.TextureCoordArray);
+
 #if CG_OpenGL && !CG_DirectX
             GL.PointSize(primitivaTamanho);
 

@@ -12,6 +12,9 @@ using System;
 using OpenTK.Mathematics;
 using System.Collections.Generic;
 
+using System.Drawing;
+using System.Drawing.Imaging;
+
 //FIXME: padrão Singleton
 
 namespace gcgcg
@@ -31,7 +34,7 @@ namespace gcgcg
 
         private int _vertexBufferObject_sruEixos;
         private int _vertexArrayObject_sruEixos;
-
+        private int _textureId;
         private Shader _shaderBranca;
         private Shader _shaderVermelha;
         private Shader _shaderVerde;
@@ -56,7 +59,7 @@ namespace gcgcg
         private void Diretivas()
         {
 #if DEBUG
-      Console.WriteLine("Debug version");
+            Console.WriteLine("Debug version");
 #endif
 #if RELEASE
     Console.WriteLine("Release version");
@@ -77,6 +80,24 @@ namespace gcgcg
         }
         protected override void OnLoad()
         {
+            GL.GenTextures(1, out _textureId);
+            GL.BindTexture(TextureTarget.Texture2D, _textureId);
+
+            using (var image = new Bitmap("textura.png"))
+            {
+                var data = image.LockBits(new Rectangle(0, 0, image.Width, image.Height),
+                    ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba,
+                    data.Width, data.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra,
+                    PixelType.UnsignedByte, data.Scan0);
+
+                image.UnlockBits(data);
+            }
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+
             base.OnLoad();
 
             Diretivas();
@@ -229,7 +250,7 @@ namespace gcgcg
 
                 objetoSelecionado = mundo.BuscarObjetoPontoDentro(sruPonto);
 
-                if(objetoSelecionado != null)
+                if (objetoSelecionado != null)
                     objetoSelecionado.ToString();
             }
             if (input.IsKeyDown(Keys.Escape))
