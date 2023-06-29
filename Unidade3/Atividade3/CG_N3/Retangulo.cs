@@ -7,11 +7,14 @@ namespace gcgcg
 {
   internal class Retangulo : Objeto
   {
+    private Texture texture;
+
     public Retangulo(Objeto paiRef, ref char _rotulo) : 
       this(paiRef, ref _rotulo, new Ponto4D(-0.5,-0.5), new Ponto4D(0.5,0.5)) {}
 
     public Retangulo(Objeto paiRef, ref char _rotulo, Ponto4D ptoInfEsq, Ponto4D ptoSupDir) : base(paiRef, ref _rotulo)
     {
+      texture = Texture.LoadFromFile("caminho/para/o/arquivo.png");
       PrimitivaTipo = PrimitiveType.Points;
       PrimitivaTamanho = 10;
 

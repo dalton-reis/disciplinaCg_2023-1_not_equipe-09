@@ -99,6 +99,18 @@ namespace gcgcg
 
         public void Desenhar(Transformacao4D matrizGrafo)
         {
+            // Ative o uso da textura antes de desenhar o retângulo
+            texture.Use(TextureUnit.Texture0);
+
+            // Renderize o retângulo usando a textura
+            // Exemplo de código para desenhar um retângulo com textura
+            GL.Begin(PrimitiveType.Quads);
+            GL.TexCoord2(0, 0); GL.Vertex2(0, 0);
+            GL.TexCoord2(1, 0); GL.Vertex2(1, 0);
+            GL.TexCoord2(1, 1); GL.Vertex2(1, 1);
+            GL.TexCoord2(0, 1); GL.Vertex2(0, 1);
+            GL.End();
+
 #if CG_OpenGL && !CG_DirectX
             GL.PointSize(primitivaTamanho);
 
