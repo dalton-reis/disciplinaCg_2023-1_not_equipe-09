@@ -71,17 +71,17 @@ namespace gcgcg
         new Vector3(-1.0f,  1.0f, -1.0f),
       };
 
-      colors = new int[]
-      {
-        ColorToRgba32(Color.DarkRed),
-        ColorToRgba32(Color.DarkRed),
-        ColorToRgba32(Color.Gold),
-        ColorToRgba32(Color.Gold),
-        ColorToRgba32(Color.DarkRed),
-        ColorToRgba32(Color.DarkRed),
-        ColorToRgba32(Color.Gold),
-        ColorToRgba32(Color.Gold),
-      };
+      // colors = new int[]
+      // {
+      //   ColorToRgba32(Color.DarkRed),
+      //   ColorToRgba32(Color.DarkRed),
+      //   ColorToRgba32(Color.Gold),
+      //   ColorToRgba32(Color.Gold),
+      //   ColorToRgba32(Color.DarkRed),
+      //   ColorToRgba32(Color.DarkRed),
+      //   ColorToRgba32(Color.Gold),
+      //   ColorToRgba32(Color.Gold),
+      // };
 
 
       // Construção dos quadrados que formam o cubo
